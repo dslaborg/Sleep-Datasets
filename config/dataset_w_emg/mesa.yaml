@@ -1,0 +1,22 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'mesa'
+bad_recordings: [ '1738', '6476' ]  # https://sleepdata.org/datasets/mesa/pages/polysomnography-introduction.md
+
+psg:
+  file_glob: 'mesa/polysomnography/edfs/*.edf'
+  eeg_channels: [ 'EEG1', 'EEG2', 'EEG3' ]
+  eog_channels: [ 'EOG-L', 'EOG-R' ]
+  emg_channels: [ 'EMG' ]
+  renamed_eeg_channels: [ 'Fz-Cz', 'Cz-Oz', 'C4-M1' ]
+  renamed_eog_channels: [ 'E1-FPz', 'E2-FPz' ]
+  renamed_emg_channels: [ 'EMG' ]
+  id_regex: ".*-.*-(.*)"
+
+hypno:
+  file_glob: 'mesa/polysomnography/annotations-events-nsrr/*.xml'
+  id_regex: ".*-.*-(.*)-.*"

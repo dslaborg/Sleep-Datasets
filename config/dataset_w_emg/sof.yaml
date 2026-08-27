@@ -1,0 +1,19 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'sof'
+
+psg:
+  file_glob: 'sof/polysomnography/edfs/*.edf'
+  eeg_channels: [ 'C3-A2', 'C4-A1' ]
+  eog_channels: [ 'LOC-A2', 'ROC-A1' ]
+  emg_channels: [ 'L_CHIN', 'R_CHIN', 'EMG/L', 'EMG/R' ]
+  renamed_emg_channels: [ 'EMGl', 'EMGr', 'EMGl', 'EMGr' ]
+  id_regex: ".*-.*-.*-(.*)"
+
+hypno:
+  file_glob: 'sof/polysomnography/annotations-events-nsrr/*.xml'
+  id_regex: ".*-.*-.*-(.*)-.*"

@@ -1,0 +1,33 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'mass-c3'
+bad_recordings: [ 'preparations' ]  # mark preparations folder as not a recording
+
+psg:
+  file_glob: 'MASS/SS3_EDF/*PSG.edf'
+  eeg_channels: [ 'EEG Fp1-LER', 'EEG Fp2-LER', 'EEG F7-LER', 'EEG F8-LER', 'EEG F3-LER', 'EEG F4-LER', 'EEG T3-LER',
+                  'EEG T4-LER', 'EEG C3-LER', 'EEG C4-LER', 'EEG T5-LER', 'EEG T6-LER', 'EEG P3-LER', 'EEG P4-LER',
+                  'EEG O1-LER', 'EEG O2-LER', 'EEG Fz-LER', 'EEG Cz-LER', 'EEG Pz-LER', 'EEG Oz-LER', 'EEG A2-LER' ]
+  eog_channels: [ 'EOG Left Horiz', 'EOG Right Horiz' ]
+  renamed_eeg_channels: [ 'Fp1-LER', 'Fp2-LER', 'F7-LER', 'F8-LER', 'F3-LER', 'F4-LER', 'T3-LER', 'T4-LER', 'C3-LER',
+                          'C4-LER', 'T5-LER', 'T6-LER', 'P3-LER', 'P4-LER', 'O1-LER', 'O2-LER', 'Fz-LER', 'Cz-LER',
+                          'Pz-LER', 'Oz-LER', 'A2-LER' ]  # A2-LER not mentioned in paper
+  renamed_eog_channels: [ 'EOG(L)', 'EOG(R)' ]
+  id_regex: "(.*) PSG"
+
+hypno:
+  file_glob: 'MASS/SS3_EDF/*Base.edf'
+  id_regex: "(.*) Base"
+  extract_func:
+    _target_: utils.extract_hypno_utils.extract_from_edf
+  write_offsets_to_file: True
+
+splitting:
+  test_fraction: 1.0
+  max_test_subjects: null
+  validation_fraction: 0
+  max_validation_subjects: null

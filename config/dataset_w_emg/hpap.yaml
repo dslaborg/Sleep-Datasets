@@ -1,0 +1,20 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'hpap'
+bad_recordings: [ '1600047', '1600194', '1600052', '1600368', '1600087', '1600203', '1600361', '1600280', '1600138' ]  # missing EOG
+
+psg:
+  file_glob: 'homepap/polysomnography/edfs/lab/*/*.edf'
+  eeg_channels: [ 'F4-M1', 'C4-M1', 'O2-M1', 'C3-M2', 'F3-M2', 'O1-M2' ]
+  eog_channels: [ 'E1-M2', 'E2-M1', 'E1', 'E2' ]
+  emg_channels: [ 'LCHIN-CCHIN', 'RCHIN-CCHIN' ]
+  renamed_emg_channels: [ 'EMGl', 'EMGr' ]
+  id_regex: ".*-.*-.*-(.*)"
+
+hypno:
+  file_glob: 'homepap/polysomnography/annotations-events-nsrr/lab/*/*.xml'
+  id_regex: ".*-.*-.*-(.*)-.*"

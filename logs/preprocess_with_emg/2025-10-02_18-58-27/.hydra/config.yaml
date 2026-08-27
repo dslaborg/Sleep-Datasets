@@ -1,0 +1,1150 @@
+general:
+  sample_rate: 128
+  epoch_duration: 30
+  stages:
+    9: UNKNOWN
+    0: Wake
+    1: N1
+    2: N2
+    3: N3
+    4: REM
+  rstages:
+    W: 0
+    Wake: 0
+    N1: 1
+    N2: 2
+    N3: 3
+    REM: 4
+    Unknown: 9
+    '0': 0
+    '1': 1
+    '2': 2
+    '3': 3
+    '4': 4
+    '9': 9
+    Sleep stage W: 0
+    Sleep stage 1: 1
+    Sleep stage 2: 2
+    Sleep stage 3: 3
+    Sleep stage R: 4
+    Sleep stage ?: 9
+    R: 4
+    UNKNOWN: 9
+    Sleep stage 4: 3
+    Movement time: 9
+  base_dir: /mnt/sleep/sleep_data
+  save_dir: /mnt/sleep/sleep_data/cache_w_emg
+datasets:
+  abc:
+    name: abc
+    use_dir_names: false
+    bad_recordings: []
+    psg:
+      file_glob: abc/polysomnography/edfs/*/*.edf
+      eeg_channels:
+      - F3-M2
+      - F4-M1
+      - C3-M2
+      - C4-M1
+      - O1-M2
+      - O2-M1
+      eog_channels:
+      - E1-M2
+      - E2-M1
+      emg_channels:
+      - Chin2-Chin1
+      - Chin3-Chin1
+      renamed_eeg_channels: false
+      renamed_eog_channels: false
+      renamed_emg_channels:
+      - EMGl
+      - EMGr
+      id_regex: .*-(.*-.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: abc/polysomnography/annotations-events-nsrr/*/*.xml
+      extract_func: null
+      id_regex: .*-(.*-.*)-.*
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: -(.*)
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  ccshs:
+    name: ccshs
+    use_dir_names: false
+    bad_recordings: []
+    psg:
+      file_glob: ccshs/polysomnography/edfs/*.edf
+      eeg_channels:
+      - C3-A2
+      - C4-A1
+      eog_channels:
+      - LOC-A2
+      - ROC-A1
+      emg_channels:
+      - EMG2-EMG1
+      - EMG3-EMG1
+      renamed_eeg_channels: false
+      renamed_eog_channels: false
+      renamed_emg_channels:
+      - EMGl
+      - EMGr
+      id_regex: .*-.*-(.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: ccshs/polysomnography/annotations-events-nsrr/*.xml
+      extract_func: null
+      id_regex: .*-.*-(.*)-.*
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  cfs:
+    name: cfs
+    use_dir_names: false
+    bad_recordings: []
+    psg:
+      file_glob: cfs/polysomnography/edfs/*.edf
+      eeg_channels:
+      - C3-A2
+      - C4-A1
+      eog_channels:
+      - LOC-A2
+      - ROC-A1
+      emg_channels:
+      - EMG2-EMG1
+      - EMG3-EMG1
+      renamed_eeg_channels: false
+      renamed_eog_channels: false
+      renamed_emg_channels:
+      - EMGl
+      - EMGr
+      id_regex: .*-.*-(.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: cfs/polysomnography/annotations-events-nsrr/*.xml
+      extract_func: null
+      id_regex: .*-.*-(.*)-.*
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor:
+        _target_: utils.splitting_utils.extract_cfs_family_ids
+        meta_file: ${general.base_dir}/cfs/datasets/cfs-visit5-dataset-0.7.0.csv
+      subject_id_regex: null
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  chat:
+    name: chat
+    use_dir_names: false
+    bad_recordings:
+    - baseline-300927
+    - baseline-300051
+    psg:
+      file_glob: chat/polysomnography/edfs/*/*.edf
+      eeg_channels:
+      - F3-M2
+      - F4-M1
+      - C3-M2
+      - C4-M1
+      - T3-M2
+      - T4-M1
+      - O1-M2
+      - O2-M1
+      eog_channels:
+      - E1-M2
+      - E2-M1
+      emg_channels:
+      - LCHIN-CCHIN
+      - RCHIN-CCHIN
+      renamed_eeg_channels: false
+      renamed_eog_channels: false
+      renamed_emg_channels:
+      - EMGl
+      - EMGr
+      id_regex: .*-(.*-.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: chat/polysomnography/annotations-events-nsrr/*/*.xml
+      extract_func: null
+      id_regex: .*-(.*-.*)-.*
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: -(.*)
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  dcsm:
+    name: dcsm
+    use_dir_names: true
+    bad_recordings: []
+    psg:
+      file_glob: dcsm/data/sleep/DCSM/*/psg.h5
+      eeg_channels:
+      - F3-M2
+      - F4-M1
+      - C3-M2
+      - C4-M1
+      - O1-M2
+      - O2-M1
+      eog_channels:
+      - E1-M2
+      - E2-M2
+      emg_channels:
+      - CHIN
+      renamed_eeg_channels: false
+      renamed_eog_channels: false
+      renamed_emg_channels:
+      - EMG
+      id_regex: (.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: dcsm/data/sleep/DCSM/*/hypnogram.ids
+      extract_func: null
+      id_regex: (.*)
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  dodh:
+    name: dodh
+    use_dir_names: false
+    bad_recordings:
+    - preparations
+    psg:
+      file_glob: dreem/dodh/*.h5
+      eeg_channels:
+      - C3_M2
+      - F4_M1
+      - F3_F4
+      - F3_M2
+      - F4_O2
+      - F3_O1
+      - FP1_F3
+      - FP1_M2
+      - FP1_O1
+      - FP2_F4
+      - FP2_M1
+      - FP2_O2
+      eog_channels:
+      - EOG1
+      - EOG2
+      emg_channels:
+      - EMG
+      renamed_eeg_channels:
+      - C3-M2
+      - F4-M1
+      - F3-F4
+      - F3-M2
+      - F4-O2
+      - F3-O1
+      - FP1-F3
+      - FP1-M2
+      - FP1-O1
+      - FP2-F4
+      - FP2-M1
+      - FP2-O2
+      renamed_eog_channels:
+      - EOG1
+      - EOG2
+      renamed_emg_channels: false
+      id_regex: (.*)
+      extractor:
+        _target_: utils.extract_psg_utils.dod_extract
+    hypno:
+      file_glob: cache/${name}/preparations/goldstandards/*.npy
+      extract_func: null
+      id_regex: (.*)
+      prepare_func:
+        _target_: utils.extract_hypno_utils.prepare_gs_dreem
+        dataset: ${name}
+        file_dir: dreem/scorers/dodh/
+        out_dir: cache/${name}/preparations/goldstandards/
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 1.0
+      max_test_subjects: null
+      validation_fraction: 0
+      max_validation_subjects: null
+  dodo:
+    name: dodo
+    use_dir_names: false
+    bad_recordings:
+    - preparations
+    - 5d8e93a5-d26a-436d-bc2c-e9527dc92cbf
+    psg:
+      file_glob: dreem/dodo/*.h5
+      eeg_channels:
+      - C4_M1
+      - C3_M2
+      - F3_F4
+      - F3_M2
+      - F4_O2
+      - F3_O1
+      - O1_M2
+      - O2_M1
+      eog_channels:
+      - EOG1
+      - EOG2
+      emg_channels:
+      - EMG
+      renamed_eeg_channels:
+      - C4-M1
+      - C3-M2
+      - F3-F4
+      - F3-M2
+      - F4-O2
+      - F3-O1
+      - O1-M2
+      - O2-M1
+      renamed_eog_channels:
+      - EOG1
+      - EOG2
+      renamed_emg_channels: false
+      id_regex: (.*)
+      extractor:
+        _target_: utils.extract_psg_utils.dod_extract
+    hypno:
+      file_glob: cache/${name}/preparations/goldstandards/*.npy
+      extract_func: null
+      id_regex: (.*)
+      prepare_func:
+        _target_: utils.extract_hypno_utils.prepare_gs_dreem
+        dataset: ${name}
+        file_dir: dreem/scorers/dodo/
+        out_dir: cache/${name}/preparations/goldstandards
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 1.0
+      max_test_subjects: null
+      validation_fraction: 0
+      max_validation_subjects: null
+  hpap:
+    name: hpap
+    use_dir_names: false
+    bad_recordings:
+    - '1600047'
+    - '1600194'
+    - '1600052'
+    - '1600368'
+    - '1600087'
+    - '1600203'
+    - '1600361'
+    - '1600280'
+    - '1600138'
+    psg:
+      file_glob: homepap/polysomnography/edfs/lab/*/*.edf
+      eeg_channels:
+      - F4-M1
+      - C4-M1
+      - O2-M1
+      - C3-M2
+      - F3-M2
+      - O1-M2
+      eog_channels:
+      - E1-M2
+      - E2-M1
+      - E1
+      - E2
+      emg_channels:
+      - LCHIN-CCHIN
+      - RCHIN-CCHIN
+      renamed_eeg_channels: false
+      renamed_eog_channels: false
+      renamed_emg_channels:
+      - EMGl
+      - EMGr
+      id_regex: .*-.*-.*-(.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: homepap/polysomnography/annotations-events-nsrr/lab/*/*.xml
+      extract_func: null
+      id_regex: .*-.*-.*-(.*)-.*
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  isruc-sg1:
+    name: isruc-sg1
+    use_dir_names: true
+    bad_recordings: []
+    psg:
+      file_glob: isruc/isruc-sg1/*/*.rec
+      eeg_channels:
+      - O2-M1
+      - C4-M1
+      - F4-M1
+      - O1-M2
+      - C3-M2
+      - F3-M2
+      eog_channels:
+      - E1-M2
+      - E2-M1
+      emg_channels:
+      - X1
+      renamed_eeg_channels: false
+      renamed_eog_channels: false
+      renamed_emg_channels:
+      - EMG
+      id_regex: (.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: isruc/isruc-sg1/*/*_1.txt
+      extract_func:
+        _target_: utils.extract_hypno_utils.extract_from_txt
+        stage_dict:
+          '0': Wake
+          '1': N1
+          '2': N2
+          '3': N3
+          '4': N3
+          '5': REM
+      id_regex: (.*)
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 1.0
+      max_test_subjects: null
+      validation_fraction: 0
+      max_validation_subjects: null
+  isruc-sg2:
+    name: isruc-sg2
+    use_dir_names: -2
+    bad_recordings: []
+    psg:
+      file_glob: isruc/isruc-sg2/*/*/*.rec
+      eeg_channels:
+      - O2-M1
+      - C4-M1
+      - F4-M1
+      - O1-M2
+      - C3-M2
+      - F3-M2
+      eog_channels:
+      - E1-M2
+      - E2-M1
+      emg_channels:
+      - X1
+      renamed_eeg_channels: false
+      renamed_eog_channels: false
+      renamed_emg_channels:
+      - EMG
+      id_regex: (.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: isruc/isruc-sg2/*/*/*_1.txt
+      extract_func:
+        _target_: utils.extract_hypno_utils.extract_from_txt
+        stage_dict:
+          '0': Wake
+          '1': N1
+          '2': N2
+          '3': N3
+          '4': N3
+          '5': REM
+      id_regex: (.*)
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: (.*)_
+      test_fraction: 1.0
+      max_test_subjects: null
+      validation_fraction: 0
+      max_validation_subjects: null
+  isruc-sg3:
+    name: isruc-sg3
+    use_dir_names: true
+    bad_recordings: []
+    psg:
+      file_glob: isruc/isruc-sg3/*/*.rec
+      eeg_channels:
+      - O2-M1
+      - C4-M1
+      - F4-M1
+      - O1-M2
+      - C3-M2
+      - F3-M2
+      eog_channels:
+      - E1-M2
+      - E2-M1
+      emg_channels:
+      - X1
+      renamed_eeg_channels: false
+      renamed_eog_channels: false
+      renamed_emg_channels:
+      - EMG
+      id_regex: (.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: isruc/isruc-sg3/*/*_1.txt
+      extract_func:
+        _target_: utils.extract_hypno_utils.extract_from_txt
+        stage_dict:
+          '0': Wake
+          '1': N1
+          '2': N2
+          '3': N3
+          '4': N3
+          '5': REM
+      id_regex: (.*)
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 1.0
+      max_test_subjects: null
+      validation_fraction: 0
+      max_validation_subjects: null
+  mass-c1:
+    name: mass-c1
+    use_dir_names: false
+    bad_recordings:
+    - preparations
+    psg:
+      file_glob: MASS/SS1_EDF/*PSG.edf
+      eeg_channels:
+      - EEG F3-CLE
+      - EEG F4-CLE
+      - EEG C3-CLE
+      - EEG C4-CLE
+      - EEG O1-CLE
+      - EEG O2-CLE
+      - EEG F7-CLE
+      - EEG F8-CLE
+      - EEG T3-CLE
+      - EEG T4-CLE
+      - EEG T5-CLE
+      - EEG T6-CLE
+      - EEG P3-CLE
+      - EEG P4-CLE
+      - EEG Fz-CLE
+      - EEG Cz-CLE
+      - EEG Pz-CLE
+      - EEG Fp1-CLE
+      - EEG Fp2-CLE
+      - EEG F3-LER
+      - EEG F4-LER
+      - EEG C3-LER
+      - EEG C4-LER
+      - EEG O1-LER
+      - EEG O2-LER
+      - EEG F7-LER
+      - EEG F8-LER
+      - EEG T3-LER
+      - EEG T4-LER
+      - EEG T5-LER
+      - EEG T6-LER
+      - EEG P3-LER
+      - EEG P4-LER
+      - EEG Fz-LER
+      - EEG Cz-LER
+      - EEG Pz-LER
+      - EEG Fp1-LER
+      - EEG Fp2-LER
+      eog_channels:
+      - EOG Left Horiz
+      - EOG Right Horiz
+      emg_channels:
+      - EMG_CHIN1
+      - EMG_CHIN2
+      - EMG_CHIN3
+      renamed_eeg_channels:
+      - F3-CLE
+      - F4-CLE
+      - C3-CLE
+      - C4-CLE
+      - O1-CLE
+      - O2-CLE
+      - F7-CLE
+      - F8-CLE
+      - T3-CLE
+      - T4-CLE
+      - T5-CLE
+      - T6-CLE
+      - P3-CLE
+      - P4-CLE
+      - Fz-CLE
+      - Cz-CLE
+      - Pz-CLE
+      - Fp1-CLE
+      - Fp2-CLE
+      - F3-LER
+      - F4-LER
+      - C3-LER
+      - C4-LER
+      - O1-LER
+      - O2-LER
+      - F7-LER
+      - F8-LER
+      - T3-LER
+      - T4-LER
+      - T5-LER
+      - T6-LER
+      - P3-LER
+      - P4-LER
+      - Fz-LER
+      - Cz-LER
+      - Pz-LER
+      - Fp1-LER
+      - Fp2-LER
+      renamed_eog_channels:
+      - EOG(L)
+      - EOG(R)
+      renamed_emg_channels:
+      - EMG1
+      - EMG2
+      - EMG3
+      id_regex: (.*) PSG
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: MASS/SS1_EDF/*Base.edf
+      extract_func:
+        _target_: utils.extract_hypno_utils.extract_from_edf
+      id_regex: (.*) Base
+      prepare_func: null
+      write_offsets_to_file: true
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 1.0
+      max_test_subjects: null
+      validation_fraction: 0
+      max_validation_subjects: null
+  mass-c3:
+    name: mass-c3
+    use_dir_names: false
+    bad_recordings:
+    - preparations
+    psg:
+      file_glob: MASS/SS3_EDF/*PSG.edf
+      eeg_channels:
+      - EEG Fp1-LER
+      - EEG Fp2-LER
+      - EEG F7-LER
+      - EEG F8-LER
+      - EEG F3-LER
+      - EEG F4-LER
+      - EEG T3-LER
+      - EEG T4-LER
+      - EEG C3-LER
+      - EEG C4-LER
+      - EEG T5-LER
+      - EEG T6-LER
+      - EEG P3-LER
+      - EEG P4-LER
+      - EEG O1-LER
+      - EEG O2-LER
+      - EEG Fz-LER
+      - EEG Cz-LER
+      - EEG Pz-LER
+      - EEG Oz-LER
+      - EEG A2-LER
+      eog_channels:
+      - EOG Left Horiz
+      - EOG Right Horiz
+      emg_channels:
+      - EMG_CHIN1
+      - EMG_CHIN2
+      - EMG_CHIN3
+      renamed_eeg_channels:
+      - Fp1-LER
+      - Fp2-LER
+      - F7-LER
+      - F8-LER
+      - F3-LER
+      - F4-LER
+      - T3-LER
+      - T4-LER
+      - C3-LER
+      - C4-LER
+      - T5-LER
+      - T6-LER
+      - P3-LER
+      - P4-LER
+      - O1-LER
+      - O2-LER
+      - Fz-LER
+      - Cz-LER
+      - Pz-LER
+      - Oz-LER
+      - A2-LER
+      renamed_eog_channels:
+      - EOG(L)
+      - EOG(R)
+      renamed_emg_channels:
+      - EMG1
+      - EMG2
+      - EMG3
+      id_regex: (.*) PSG
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: MASS/SS3_EDF/*Base.edf
+      extract_func:
+        _target_: utils.extract_hypno_utils.extract_from_edf
+      id_regex: (.*) Base
+      prepare_func: null
+      write_offsets_to_file: true
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 1.0
+      max_test_subjects: null
+      validation_fraction: 0
+      max_validation_subjects: null
+  mesa:
+    name: mesa
+    use_dir_names: false
+    bad_recordings:
+    - '1738'
+    - '6476'
+    psg:
+      file_glob: mesa/polysomnography/edfs/*.edf
+      eeg_channels:
+      - EEG1
+      - EEG2
+      - EEG3
+      eog_channels:
+      - EOG-L
+      - EOG-R
+      emg_channels:
+      - EMG
+      renamed_eeg_channels:
+      - Fz-Cz
+      - Cz-Oz
+      - C4-M1
+      renamed_eog_channels:
+      - E1-FPz
+      - E2-FPz
+      renamed_emg_channels:
+      - EMG
+      id_regex: .*-.*-(.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: mesa/polysomnography/annotations-events-nsrr/*.xml
+      extract_func: null
+      id_regex: .*-.*-(.*)-.*
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  mros:
+    name: mros
+    use_dir_names: false
+    bad_recordings:
+    - visit1-aa3903
+    - visit1-aa3370
+    - visit1-aa1900
+    - visit1-aa3411
+    - visit1-aa1367
+    - visit1-aa1715
+    - visit1-aa2159
+    - visit1-aa2180
+    - visit1-aa4156
+    - visit1-aa2033
+    - visit2-aa2033
+    - visit1-aa3905
+    - visit1-aa4225
+    - visit1-aa4398
+    - visit2-aa4398
+    - visit1-aa4928
+    - visit1-aa5622
+    - visit2-aa5622
+    - visit1-aa5660
+    psg:
+      file_glob: mros/polysomnography/edfs/visit*/*.edf
+      eeg_channels:
+      - C3-M2
+      - C4-M1
+      eog_channels:
+      - E1-M2
+      - E2-M1
+      emg_channels:
+      - LCHIN
+      - RCHIN
+      - L_CHIN
+      - R_CHIN
+      renamed_eeg_channels: false
+      renamed_eog_channels: false
+      renamed_emg_channels:
+      - EMGl
+      - EMGr
+      - EMGl
+      - EMGr
+      id_regex: .*-(.*-.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: mros/polysomnography/annotations-events-nsrr/visit*/*.xml
+      extract_func: null
+      id_regex: .*-(.*-.*)-.*
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: -(.*)
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  phys:
+    name: phys
+    use_dir_names: false
+    bad_recordings:
+    - preparations
+    psg:
+      file_glob: phys/physionet.org/files/challenge-2018/1.0.0/training/tr*/tr??-????.mat
+      eeg_channels:
+      - F3-M2
+      - F4-M1
+      - C3-M2
+      - C4-M1
+      - O1-M2
+      - O2-M1
+      eog_channels:
+      - E1-M2
+      emg_channels:
+      - CHIN1-CHIN2
+      renamed_eeg_channels: false
+      renamed_eog_channels: false
+      renamed_emg_channels:
+      - EMG
+      id_regex: tr(.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: cache/${name}/preparations/prepared_hypno/tr*/tr*.ids
+      extract_func: null
+      id_regex: tr(.*)-HYP
+      prepare_func:
+        _target_: utils.extract_hypno_utils.prepare_phys
+        dataset_folder_path: phys/physionet.org/files/challenge-2018/1.0.0/training
+        out_dir: ${general.save_dir}/${name}/preparations/prepared_hypno
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  sedf-sc:
+    name: sedf-sc
+    use_dir_names: false
+    bad_recordings: []
+    psg:
+      file_glob: sleepedfx/physionet.org/files/sleep-edfx/1.0.0/sleep-cassette/*PSG.edf
+      eeg_channels:
+      - EEG Fpz-Cz
+      - EEG Pz-Oz
+      eog_channels:
+      - EOG horizontal
+      emg_channels:
+      - EMG_SUBMENTAL
+      renamed_eeg_channels:
+      - Fpz-Cz
+      - Pz-Oz
+      renamed_eog_channels:
+      - EOG
+      renamed_emg_channels:
+      - EMG
+      id_regex: SC4([0-9]{3}).*
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: sleepedfx/physionet.org/files/sleep-edfx/1.0.0/sleep-cassette/*Hypnogram.edf
+      extract_func: null
+      id_regex: SC4([0-9]{3}).*
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: ([0-9]{2}).*
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  sedf-st:
+    name: sedf-st
+    use_dir_names: false
+    bad_recordings: []
+    psg:
+      file_glob: sleepedfx/physionet.org/files/sleep-edfx/1.0.0/sleep-telemetry/*PSG.edf
+      eeg_channels:
+      - EEG Fpz-Cz
+      - EEG Pz-Oz
+      eog_channels:
+      - EOG horizontal
+      emg_channels:
+      - EMG_SUBMENTAL
+      renamed_eeg_channels:
+      - Fpz-Cz
+      - Pz-Oz
+      renamed_eog_channels:
+      - EOG
+      renamed_emg_channels:
+      - EMG
+      id_regex: ST7([0-9]{3}).*
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: sleepedfx/physionet.org/files/sleep-edfx/1.0.0/sleep-telemetry/*Hypnogram.edf
+      extract_func: null
+      id_regex: ST7([0-9]{3}).*
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: ([0-9]{2}).*
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  shhs:
+    name: shhs
+    use_dir_names: false
+    bad_recordings: []
+    psg:
+      file_glob: shhs/polysomnography/edfs/shhs*/*.edf
+      eeg_channels:
+      - EEG
+      - EEG(sec)
+      eog_channels:
+      - EOG(L)
+      - EOG(R)
+      emg_channels:
+      - EMG
+      renamed_eeg_channels:
+      - C4-A1
+      - C3-A2
+      renamed_eog_channels:
+      - EOG(L)-PG1
+      - EOG(R)-PG1
+      renamed_emg_channels:
+      - EMG
+      id_regex: shhs(.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: shhs/polysomnography/annotations-events-nsrr/shhs*/*.xml
+      extract_func: null
+      id_regex: shhs(.*)-.*
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: -(.*)
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  sof:
+    name: sof
+    use_dir_names: false
+    bad_recordings: []
+    psg:
+      file_glob: sof/polysomnography/edfs/*.edf
+      eeg_channels:
+      - C3-A2
+      - C4-A1
+      eog_channels:
+      - LOC-A2
+      - ROC-A1
+      emg_channels:
+      - L_CHIN
+      - R_CHIN
+      - EMG/L
+      - EMG/R
+      renamed_eeg_channels: false
+      renamed_eog_channels: false
+      renamed_emg_channels:
+      - EMGl
+      - EMGr
+      - EMGl
+      - EMGr
+      id_regex: .*-.*-.*-(.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: sof/polysomnography/annotations-events-nsrr/*.xml
+      extract_func: null
+      id_regex: .*-.*-.*-(.*)-.*
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 0.15
+      max_test_subjects: 100
+      validation_fraction: 0.1
+      max_validation_subjects: 50
+  svuh:
+    name: svuh
+    use_dir_names: false
+    bad_recordings: []
+    psg:
+      file_glob: SVUH/physionet.org/files/ucddb/1.0.0/*.rec
+      eeg_channels:
+      - C3A2
+      - C4A1
+      eog_channels:
+      - Lefteye
+      - RightEye
+      emg_channels:
+      - EMG
+      renamed_eeg_channels:
+      - C3-A2
+      - C4-A1
+      renamed_eog_channels:
+      - EOG(L)
+      - EOG(R)
+      renamed_emg_channels:
+      - EMG
+      id_regex: ucddb(.*)
+      extractor:
+        _target_: extract_psg.standard_extract
+    hypno:
+      file_glob: SVUH/physionet.org/files/ucddb/1.0.0/*_stage.txt
+      extract_func:
+        _target_: utils.extract_hypno_utils.extract_from_txt
+        stage_dict:
+          '0': Wake
+          '1': REM
+          '2': N1
+          '3': N2
+          '4': N3
+          '5': N3
+          '6': UNKNOWN
+          '7': UNKNOWN
+          '8': UNKNOWN
+      id_regex: ucddb(.*)_.*
+      prepare_func: null
+      write_offsets_to_file: false
+    preprocessing:
+      psg_regex: .*[.]h5
+      hyp_regex: .*[.]ids
+    splitting:
+      family_id_extractor: null
+      subject_id_regex: null
+      test_fraction: 1.0
+      max_test_subjects: null
+      validation_fraction: 0
+      max_validation_subjects: null
+save_file: ${general.save_dir}/preprocessed/processed_data.h5
+num_threads: 20
+strip_func:
+  strip_func: strip_to_match
+filter_settings: {}
+quality_control_func:
+  quality_control_func: clip_noisy_values
+  min_max_times_global_iqr: 20
+scaler: RobustScaler

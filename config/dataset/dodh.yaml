@@ -1,0 +1,35 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'dodh'
+bad_recordings: [ 'preparations' ]
+
+psg:
+  file_glob: 'dreem/dodh/*.h5'
+  eeg_channels: [ 'C3_M2', 'F4_M1', 'F3_F4', 'F3_M2', 'F4_O2', 'F3_O1', 'FP1_F3', 'FP1_M2', 'FP1_O1', 'FP2_F4',
+                  'FP2_M1', 'FP2_O2' ]
+  eog_channels: [ 'EOG1', 'EOG2' ]
+  renamed_eeg_channels: [ 'C3-M2', 'F4-M1', 'F3-F4', 'F3-M2', 'F4-O2', 'F3-O1', 'FP1-F3', 'FP1-M2', 'FP1-O1', 'FP2-F4',
+                          'FP2-M1', 'FP2-O2' ]
+  renamed_eog_channels: [ 'EOG1', 'EOG2' ]
+  id_regex: "(.*)"
+  extractor:
+    _target_: utils.extract_psg_utils.dod_extract
+
+hypno:
+  file_glob: 'cache/${name}/preparations/goldstandards/*.npy'
+  id_regex: "(.*)"
+  prepare_func:
+    _target_: utils.extract_hypno_utils.prepare_gs_dreem
+    dataset: ${name}
+    file_dir: 'dreem/scorers/dodh/'
+    out_dir: 'cache/${name}/preparations/goldstandards/'
+
+splitting:
+  test_fraction: 1.0
+  max_test_subjects: null
+  validation_fraction: 0
+  max_validation_subjects: null

@@ -1,0 +1,24 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'phys'
+bad_recordings: [ 'preparations' ]
+
+psg:
+  file_glob: 'phys/physionet.org/files/challenge-2018/1.0.0/training/tr*/tr??-????.mat'
+  eeg_channels: [ 'F3-M2', 'F4-M1', 'C3-M2', 'C4-M1', 'O1-M2', 'O2-M1' ]
+  eog_channels: [ 'E1-M2' ]
+  emg_channels: [ 'CHIN1-CHIN2' ]
+  renamed_emg_channels: [ 'EMG' ]
+  id_regex: "tr(.*)"
+
+hypno:
+  file_glob: 'cache/${name}/preparations/prepared_hypno/tr*/tr*.ids'
+  id_regex: "tr(.*)-HYP"
+  prepare_func:
+    _target_: utils.extract_hypno_utils.prepare_phys
+    dataset_folder_path: 'phys/physionet.org/files/challenge-2018/1.0.0/training'
+    out_dir: '${general.save_dir}/${name}/preparations/prepared_hypno'

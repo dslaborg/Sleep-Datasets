@@ -1,0 +1,22 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'abc'
+
+psg:
+  file_glob: 'abc/polysomnography/edfs/*/*.edf'
+  eeg_channels: [ 'F3-M2', 'F4-M1', 'C3-M2', 'C4-M1', 'O1-M2', 'O2-M1' ]
+  eog_channels: [ 'E1-M2', 'E2-M1' ]
+  emg_channels: [ 'Chin2-Chin1', 'Chin3-Chin1' ]
+  renamed_emg_channels: [ 'EMGl', 'EMGr' ]
+  id_regex: ".*-(.*-.*)"
+
+hypno:
+  file_glob: 'abc/polysomnography/annotations-events-nsrr/*/*.xml'
+  id_regex: ".*-(.*-.*)-.*"
+
+splitting:
+  subject_id_regex: "-(.*)"

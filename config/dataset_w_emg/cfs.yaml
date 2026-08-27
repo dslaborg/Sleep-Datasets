@@ -1,0 +1,24 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'cfs'
+
+psg:
+  file_glob: 'cfs/polysomnography/edfs/*.edf'
+  eeg_channels: [ 'C3-A2', 'C4-A1' ]
+  eog_channels: [ 'LOC-A2', 'ROC-A1' ]
+  emg_channels: [ 'EMG2-EMG1', 'EMG3-EMG1' ]
+  renamed_emg_channels: [ 'EMGl', 'EMGr' ]
+  id_regex: ".*-.*-(.*)"
+
+hypno:
+  file_glob: 'cfs/polysomnography/annotations-events-nsrr/*.xml'
+  id_regex: ".*-.*-(.*)-.*"
+
+splitting:
+  family_id_extractor:
+    _target_: utils.splitting_utils.extract_cfs_family_ids
+    meta_file: "${general.base_dir}/cfs/datasets/cfs-visit5-dataset-0.7.0.csv"

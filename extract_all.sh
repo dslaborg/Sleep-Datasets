@@ -1,0 +1,45 @@
+#!/bin/bash
+
+python extract_hypno.py -cn=dataset/abc
+python extract_hypno.py -cn=dataset/ccshs
+python extract_hypno.py -cn=dataset/cfs
+python extract_hypno.py -cn=dataset/chat
+python extract_hypno.py -cn=dataset/dcsm
+python extract_hypno.py -cn=dataset/dodh
+python extract_hypno.py -cn=dataset/dodo
+python extract_hypno.py -cn=dataset/hpap
+python extract_hypno.py -cn=dataset/isruc-sg1
+python extract_hypno.py -cn=dataset/isruc-sg2
+python extract_hypno.py -cn=dataset/isruc-sg3
+python extract_hypno.py -cn=dataset/mass-c1
+python extract_hypno.py -cn=dataset/mass-c3
+python extract_hypno.py -cn=dataset/mesa
+python extract_hypno.py -cn=dataset/mros
+python extract_hypno.py -cn=dataset/phys
+python extract_hypno.py -cn=dataset/sedf-sc
+python extract_hypno.py -cn=dataset/sedf-st
+python extract_hypno.py -cn=dataset/shhs
+python extract_hypno.py -cn=dataset/sof
+python extract_hypno.py -cn=dataset/svuh
+
+python extract_psg.py -cn=dataset/abc
+python extract_psg.py -cn=dataset/ccshs
+python extract_psg.py -cn=dataset/cfs
+python extract_psg.py -cn=dataset/chat
+python extract_psg.py -cn=dataset/dcsm
+python extract_psg.py -cn=dataset/dodh
+python extract_psg.py -cn=dataset/dodo
+python extract_psg.py -cn=dataset/hpap
+python extract_psg.py -cn=dataset/isruc-sg1
+python extract_psg.py -cn=dataset/isruc-sg2
+python extract_psg.py -cn=dataset/isruc-sg3
+python extract_psg.py -cn=dataset/mass-c1
+python extract_psg.py -cn=dataset/mass-c3
+python extract_psg.py -cn=dataset/mesa
+python extract_psg.py -cn=dataset/mros
+python extract_psg.py -cn=dataset/phys
+python extract_psg.py -cn=dataset/sedf-sc
+python extract_psg.py -cn=dataset/sedf-st
+python extract_psg.py -cn=dataset/shhs
+python extract_psg.py -cn=dataset/sof
+python extract_psg.py -cn=dataset/svuh

@@ -1,0 +1,74 @@
+general:
+  sample_rate: 128
+  epoch_duration: 30
+  stages:
+    9: UNKNOWN
+    0: Wake
+    1: N1
+    2: N2
+    3: N3
+    4: REM
+  rstages:
+    W: 0
+    Wake: 0
+    N1: 1
+    N2: 2
+    N3: 3
+    REM: 4
+    Unknown: 9
+    '0': 0
+    '1': 1
+    '2': 2
+    '3': 3
+    '4': 4
+    '9': 9
+    Sleep stage W: 0
+    Sleep stage 1: 1
+    Sleep stage 2: 2
+    Sleep stage 3: 3
+    Sleep stage R: 4
+    Sleep stage ?: 9
+    R: 4
+    UNKNOWN: 9
+    Sleep stage 4: 3
+    Movement time: 9
+  base_dir: /mnt/sleep/sleep_data
+  save_dir: /mnt/sleep/sleep_data/cache_w_emg
+name: sedf-sc
+use_dir_names: false
+bad_recordings: []
+psg:
+  file_glob: sleepedfx/physionet.org/files/sleep-edfx/1.0.0/sleep-cassette/*PSG.edf
+  eeg_channels:
+  - EEG Fpz-Cz
+  - EEG Pz-Oz
+  eog_channels:
+  - EOG horizontal
+  emg_channels:
+  - EMG_SUBMENTAL
+  renamed_eeg_channels:
+  - Fpz-Cz
+  - Pz-Oz
+  renamed_eog_channels:
+  - EOG
+  renamed_emg_channels:
+  - EMG
+  id_regex: SC4([0-9]{3}).*
+  extractor:
+    _target_: extract_psg.standard_extract
+hypno:
+  file_glob: sleepedfx/physionet.org/files/sleep-edfx/1.0.0/sleep-cassette/*Hypnogram.edf
+  extract_func: null
+  id_regex: SC4([0-9]{3}).*
+  prepare_func: null
+  write_offsets_to_file: false
+preprocessing:
+  psg_regex: .*[.]h5
+  hyp_regex: .*[.]ids
+splitting:
+  family_id_extractor: null
+  subject_id_regex: ([0-9]{2}).*
+  test_fraction: 0.15
+  max_test_subjects: 100
+  validation_fraction: 0.1
+  max_validation_subjects: 50

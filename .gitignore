@@ -1,0 +1,7 @@
+.idea
+cache
+sandbox/
+checks/logs
+__pycache__
+psg-utils
+AGENTS.md

@@ -1,0 +1,79 @@
+general:
+  sample_rate: 128
+  epoch_duration: 30
+  stages:
+    9: UNKNOWN
+    0: Wake
+    1: N1
+    2: N2
+    3: N3
+    4: REM
+  rstages:
+    W: 0
+    Wake: 0
+    N1: 1
+    N2: 2
+    N3: 3
+    REM: 4
+    Unknown: 9
+    '0': 0
+    '1': 1
+    '2': 2
+    '3': 3
+    '4': 4
+    '9': 9
+    Sleep stage W: 0
+    Sleep stage 1: 1
+    Sleep stage 2: 2
+    Sleep stage 3: 3
+    Sleep stage R: 4
+    Sleep stage ?: 9
+    R: 4
+    UNKNOWN: 9
+    Sleep stage 4: 3
+    Movement time: 9
+  base_dir: /mnt/sleep/sleep_data
+  save_dir: /mnt/sleep/sleep_data/cache_w_emg
+name: phys
+use_dir_names: false
+bad_recordings:
+- preparations
+psg:
+  file_glob: phys/physionet.org/files/challenge-2018/1.0.0/training/tr*/tr??-????.mat
+  eeg_channels:
+  - F3-M2
+  - F4-M1
+  - C3-M2
+  - C4-M1
+  - O1-M2
+  - O2-M1
+  eog_channels:
+  - E1-M2
+  emg_channels:
+  - CHIN1-CHIN2
+  renamed_eeg_channels: false
+  renamed_eog_channels: false
+  renamed_emg_channels:
+  - EMG
+  id_regex: tr(.*)
+  extractor:
+    _target_: extract_psg.standard_extract
+hypno:
+  file_glob: cache/${name}/preparations/prepared_hypno/tr*/tr*.ids
+  extract_func: null
+  id_regex: tr(.*)-HYP
+  prepare_func:
+    _target_: utils.extract_hypno_utils.prepare_phys
+    dataset_folder_path: phys/physionet.org/files/challenge-2018/1.0.0/training
+    out_dir: ${general.save_dir}/${name}/preparations/prepared_hypno
+  write_offsets_to_file: false
+preprocessing:
+  psg_regex: .*[.]h5
+  hyp_regex: .*[.]ids
+splitting:
+  family_id_extractor: null
+  subject_id_regex: null
+  test_fraction: 0.15
+  max_test_subjects: 100
+  validation_fraction: 0.1
+  max_validation_subjects: 50

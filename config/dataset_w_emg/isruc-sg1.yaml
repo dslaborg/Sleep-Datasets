@@ -1,0 +1,31 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'isruc-sg1'
+use_dir_names: True
+
+psg:
+  file_glob: 'isruc/isruc-sg1/*/*.rec'
+  eeg_channels: [ 'O2-M1', 'C4-M1', 'F4-M1', 'O1-M2', 'C3-M2', 'F3-M2' ]
+  eog_channels: [ 'E1-M2', 'E2-M1' ]
+  emg_channels: [ 'X1' ]
+  renamed_emg_channels: [ 'EMG' ]
+  id_regex: "(.*)"
+
+hypno:
+  file_glob: 'isruc/isruc-sg1/*/*_1.txt'
+  id_regex: "(.*)"
+  extract_func:
+    _target_: utils.extract_hypno_utils.extract_from_txt
+    # not sure, whether this mapping is correct since I could not find any documentation
+    # looking at the stages of a single recording, only [0,1,2,3,5] are used
+    stage_dict: { "0": 'Wake', "1": 'N1', "2": 'N2', "3": 'N3', "4": 'N3', "5": 'REM' }
+
+splitting:
+  test_fraction: 1.0
+  max_test_subjects: null
+  validation_fraction: 0
+  max_validation_subjects: null

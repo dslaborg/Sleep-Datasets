@@ -1,0 +1,24 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'sedf-st'
+
+psg:
+  file_glob: 'sleepedfx/physionet.org/files/sleep-edfx/1.0.0/sleep-telemetry/*PSG.edf'
+  eeg_channels: [ 'EEG Fpz-Cz', 'EEG Pz-Oz' ]
+  eog_channels: [ 'EOG horizontal' ]
+  emg_channels: [ 'EMG_SUBMENTAL' ]
+  renamed_eeg_channels: [ 'Fpz-Cz', 'Pz-Oz' ]
+  renamed_eog_channels: [ 'EOG' ]
+  renamed_emg_channels: [ 'EMG' ]
+  id_regex: "ST7([0-9]{3}).*"
+
+hypno:
+  file_glob: 'sleepedfx/physionet.org/files/sleep-edfx/1.0.0/sleep-telemetry/*Hypnogram.edf'
+  id_regex: "ST7([0-9]{3}).*"
+
+splitting:
+  subject_id_regex: "([0-9]{2}).*"
