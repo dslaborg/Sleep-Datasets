@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'mros'
+bad_recordings: [ 'visit1-aa3903', 'visit1-aa3370', 'visit1-aa1900', 'visit1-aa3411', 'visit1-aa1367', 'visit1-aa1715',  # missing channels
+                  # https://sleepdata.org/datasets/mros/pages/polysomnography-introduction.md
+                  'visit1-aa2159', 'visit1-aa2180', 'visit1-aa4156', 'visit1-aa2033', 'visit2-aa2033', 'visit1-aa3905',
+                  'visit1-aa4225', 'visit1-aa4398', 'visit2-aa4398', 'visit1-aa4928', 'visit1-aa5622', 'visit2-aa5622',
+                  'visit1-aa5660' ]
+
+psg:
+  file_glob: 'mros/polysomnography/edfs/visit*/*.edf'
+  eeg_channels: [ 'C3-M2', 'C4-M1' ]
+  eog_channels: [ 'E1-M2', 'E2-M1' ]
+  emg_channels: [ 'LCHIN', 'RCHIN', 'L_CHIN', 'R_CHIN' ]
+  renamed_emg_channels: [ 'EMGl', 'EMGr', 'EMGl', 'EMGr' ]
+  id_regex: ".*-(.*-.*)"
+
+hypno:
+  file_glob: 'mros/polysomnography/annotations-events-nsrr/visit*/*.xml'
+  id_regex: ".*-(.*-.*)-.*"
+
+splitting:
+  subject_id_regex: "-(.*)"

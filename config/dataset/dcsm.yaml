@@ -1,0 +1,18 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'dcsm'
+use_dir_names: True
+
+psg:
+  file_glob: 'dcsm/data/sleep/DCSM/*/psg.h5'
+  eeg_channels: [ 'F3-M2', 'F4-M1', 'C3-M2', 'C4-M1', 'O1-M2', 'O2-M1' ]
+  eog_channels: [ 'E1-M2', 'E2-M2' ]
+  id_regex: "(.*)"
+
+hypno:
+  file_glob: 'dcsm/data/sleep/DCSM/*/hypnogram.ids'
+  id_regex: "(.*)"

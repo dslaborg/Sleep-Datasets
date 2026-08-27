@@ -1,0 +1,36 @@
+# config expected by `preprocess.py`; standard settings (no bandpass filtering, no emg channels).
+# all datasets are included via the per-dataset entries below; drop a line to exclude a dataset.
+defaults:
+  - base_config@_global_
+  - dataset/abc@datasets.abc
+  - dataset/ccshs@datasets.ccshs
+  - dataset/cfs@datasets.cfs
+  - dataset/chat@datasets.chat
+  - dataset/dcsm@datasets.dcsm
+  - dataset/dodh@datasets.dodh
+  - dataset/dodo@datasets.dodo
+  - dataset/hpap@datasets.hpap
+  - dataset/isruc-sg1@datasets.isruc-sg1
+  - dataset/isruc-sg2@datasets.isruc-sg2
+  - dataset/isruc-sg3@datasets.isruc-sg3
+  - dataset/mass-c1@datasets.mass-c1
+  - dataset/mass-c3@datasets.mass-c3
+  - dataset/mesa@datasets.mesa
+  - dataset/mros@datasets.mros
+  - dataset/phys@datasets.phys
+  - dataset/sedf-sc@datasets.sedf-sc
+  - dataset/sedf-st@datasets.sedf-st
+  - dataset/shhs@datasets.shhs
+  - dataset/sof@datasets.sof
+  - dataset/svuh@datasets.svuh
+  - _self_
+
+save_file: "${general.save_dir}/preprocessed/processed_data.h5"  # where to write the combined output h5 (must not exist)
+num_threads: 20  # number of threads used to preprocess the recordings in parallel
+strip_func:
+  strip_func: strip_to_match  # strips the psg/hypnogram to the common (overlapping) span of the two
+filter_settings: {}  # bandpass filter settings; empty means no filtering (see preprocess_with_filtering.yaml)
+quality_control_func:
+  quality_control_func: "clip_noisy_values"  # clip values that are far out of the global iqr range
+  min_max_times_global_iqr: 20  # values beyond 20x the global iqr range are clipped
+scaler: "RobustScaler"  # scaler used to normalize the signals

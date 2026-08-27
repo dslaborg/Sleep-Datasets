@@ -1,0 +1,34 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'svuh'
+
+psg:
+  file_glob: 'SVUH/physionet.org/files/ucddb/1.0.0/*.rec'
+  eeg_channels: [ 'C3A2', 'C4A1' ]
+  eog_channels: [ 'Lefteye', 'RightEye' ]
+  emg_channels: [ 'EMG' ]
+  renamed_eeg_channels: [ 'C3-A2', 'C4-A1' ]
+  renamed_eog_channels: [ 'EOG(L)', 'EOG(R)' ]
+  renamed_emg_channels: [ 'EMG' ]
+  id_regex: "ucddb(.*)"
+
+hypno:
+  file_glob: 'SVUH/physionet.org/files/ucddb/1.0.0/*_stage.txt'
+  id_regex: "ucddb(.*)_.*"
+  extract_func:
+    _target_: utils.extract_hypno_utils.extract_from_txt
+    # mapping taken from https://physionet.org/content/ucddb/1.0.0/
+    # the key "8" is not documented, but it is used in the data, so I assume it is "UNKNOWN"
+    # "7" is originally "Indeterminate", but I map it to "UNKNOWN" as well
+    stage_dict: { "0": 'Wake', "1": 'REM', "2": 'N1', "3": 'N2', "4": 'N3', "5": 'N3',
+                  "6": 'UNKNOWN', "7": 'UNKNOWN', "8": 'UNKNOWN' }
+
+splitting:
+  test_fraction: 1.0
+  max_test_subjects: null
+  validation_fraction: 0
+  max_validation_subjects: null

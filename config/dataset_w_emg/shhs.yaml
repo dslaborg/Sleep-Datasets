@@ -1,0 +1,24 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'shhs'
+
+psg:
+  file_glob: 'shhs/polysomnography/edfs/shhs*/*.edf'
+  eeg_channels: [ 'EEG', 'EEG(sec)' ]
+  eog_channels: [ 'EOG(L)', 'EOG(R)' ]
+  emg_channels: [ 'EMG' ]
+  renamed_eeg_channels: ['C4-A1', 'C3-A2']
+  renamed_eog_channels: ['EOG(L)-PG1', 'EOG(R)-PG1']
+  renamed_emg_channels: ['EMG']
+  id_regex: "shhs(.*)"
+
+hypno:
+  file_glob: 'shhs/polysomnography/annotations-events-nsrr/shhs*/*.xml'
+  id_regex: "shhs(.*)-.*"
+
+splitting:
+  subject_id_regex: "-(.*)"

@@ -1,0 +1,37 @@
+defaults:
+  - ../base_config@_global_
+  - _self_
+
+name: ???  # dataset name, used as the group name in the output h5 file and to select the dataset folder
+use_dir_names: False  # False: derive the subject/recording name from the file name; True: use the parent folder name
+bad_recordings: [ ]  # recording names to exclude (e.g. missing/broken channels), see per-dataset configs
+
+psg:
+  file_glob: ???  # glob (relative to general.base_dir) matching all psg files of this dataset
+  eeg_channels: ???  # eeg channels to extract, either the exact names in the file or a referential montage (e.g. 'C3-M2')
+  eog_channels: ???  # eog channels to extract, same as above
+  renamed_eeg_channels: False  # names the extracted eeg channels shall be stored under (if different from eeg_channels)
+  renamed_eog_channels: False  # names the extracted eog channels shall be stored under (if different from eog_channels)
+  id_regex: ???  # regex on the file name; the first capture group is used as the recording id
+  extractor:
+    _target_: extract_psg.standard_extract  # extraction function for the PSG signals, can be overridden per dataset (e.g. dreem)
+
+hypno:
+  file_glob: ???  # glob (relative to general.base_dir) matching all hypnogram annotation files of this dataset
+  extract_func: null  # optional function to parse the annotation file format into inits/durations/stages
+  id_regex: ???  # regex on the file name; the first capture group is used as the recording id (should match the IDs of the PSGs)
+  prepare_func: null  # optional function to create/prepare the annotation files before extraction (e.g. dreem consensus)
+  write_offsets_to_file: False  # if True, remove the offset of the first epoch and write it to 'preparations/offsets.json'
+                                # so extract_psg.py can trim the corresponding part of the psg (e.g. mass)
+
+preprocessing:
+  psg_regex: .*[.]h5  # regex selecting the psg files in the extracted folder that get preprocessed
+  hyp_regex: .*[.]ids  # regex selecting the hypnogram files in the extracted folder that get preprocessed
+
+splitting:  # used by prepare_splits.py
+  family_id_extractor: null  # optional extractor for family ids, used to split by family instead of subject
+  subject_id_regex: null  # regex whose last capture group is used as the subject id within a recording name (a subject can have multiple recordings)
+  test_fraction: 0.15  # fraction of subjects placed in the test set
+  max_test_subjects: 100  # cap on the number of test subjects
+  validation_fraction: 0.1  # fraction of subjects placed in the validation set
+  max_validation_subjects: 50  # cap on the number of validation subjects

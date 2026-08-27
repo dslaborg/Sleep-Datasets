@@ -1,0 +1,26 @@
+defaults:
+  - _self_
+
+hydra:
+  run:
+    # format of timestamp is Year-Month-Day so the folders are ordered correctly
+    dir: ./logs/${hydra.job.config_name}/${now:%Y-%m-%d_%H-%M-%S}
+  job:
+    chdir: True
+  job_logging:
+    formatters:
+      simple:
+        format: '[%(asctime)s][%(levelname)s][%(module)s:%(lineno)d] - %(message)s'
+
+general:
+  sample_rate: 128  # output sample rate of the signals, in Hz
+  epoch_duration: 30  # sleep epoch duration, in seconds
+  # keys are the encodings of the stages into the labels
+  stages: { 9: 'UNKNOWN', 0: 'Wake', 1: 'N1', 2: 'N2', 3: 'N3', 4: 'REM' }
+  # identity map used to remap the various stage encodings found in the different datasets onto the 'stages' encoding above
+  rstages: { 'W': 0, 'Wake': 0, 'N1': 1, 'N2': 2, 'N3': 3, 'REM': 4 , 'Unknown': 9,
+             '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '9': 9,
+             'Sleep stage W': 0, 'Sleep stage 1': 1, 'Sleep stage 2': 2, 'Sleep stage 3': 3, 'Sleep stage R': 4,
+             'Sleep stage ?': 9, 'R': 4, 'UNKNOWN': 9, 'Sleep stage 4': 3, 'Movement time': 9 }
+  base_dir: '<dir-to-raw-sleep-data>'  # FIXME: this should be the directory containing your raw datasets
+  save_dir: '<dir-to-save-processed-data>'  # FIXME: this should be the folder you want to save the extracted and processed datasets in

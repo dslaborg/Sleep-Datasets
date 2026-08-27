@@ -1,0 +1,140 @@
+general:
+  sample_rate: 128
+  epoch_duration: 30
+  stages:
+    9: UNKNOWN
+    0: Wake
+    1: N1
+    2: N2
+    3: N3
+    4: REM
+  rstages:
+    W: 0
+    Wake: 0
+    N1: 1
+    N2: 2
+    N3: 3
+    REM: 4
+    Unknown: 9
+    Sleep stage W: 0
+    Sleep stage 1: 1
+    Sleep stage 2: 2
+    Sleep stage 3: 3
+    Sleep stage R: 4
+    Sleep stage ?: 9
+    R: 4
+    UNKNOWN: 9
+    Sleep stage 4: 3
+    Movement time: 9
+  base_dir: /mnt/sleep/sleep_data
+  save_dir: /mnt/sleep/sleep_data/cache_fixed
+name: mass-c1
+use_dir_names: false
+bad_recordings:
+- preparations
+psg:
+  file_glob: MASS/SS1_EDF/*PSG.edf
+  eeg_channels:
+  - EEG F3-CLE
+  - EEG F4-CLE
+  - EEG C3-CLE
+  - EEG C4-CLE
+  - EEG O1-CLE
+  - EEG O2-CLE
+  - EEG F7-CLE
+  - EEG F8-CLE
+  - EEG T3-CLE
+  - EEG T4-CLE
+  - EEG T5-CLE
+  - EEG T6-CLE
+  - EEG P3-CLE
+  - EEG P4-CLE
+  - EEG Fz-CLE
+  - EEG Cz-CLE
+  - EEG Pz-CLE
+  - EEG Fp1-CLE
+  - EEG Fp2-CLE
+  - EEG F3-LER
+  - EEG F4-LER
+  - EEG C3-LER
+  - EEG C4-LER
+  - EEG O1-LER
+  - EEG O2-LER
+  - EEG F7-LER
+  - EEG F8-LER
+  - EEG T3-LER
+  - EEG T4-LER
+  - EEG T5-LER
+  - EEG T6-LER
+  - EEG P3-LER
+  - EEG P4-LER
+  - EEG Fz-LER
+  - EEG Cz-LER
+  - EEG Pz-LER
+  - EEG Fp1-LER
+  - EEG Fp2-LER
+  eog_channels:
+  - EOG Left Horiz
+  - EOG Right Horiz
+  renamed_eeg_channels:
+  - F3-CLE
+  - F4-CLE
+  - C3-CLE
+  - C4-CLE
+  - O1-CLE
+  - O2-CLE
+  - F7-CLE
+  - F8-CLE
+  - T3-CLE
+  - T4-CLE
+  - T5-CLE
+  - T6-CLE
+  - P3-CLE
+  - P4-CLE
+  - Fz-CLE
+  - Cz-CLE
+  - Pz-CLE
+  - Fp1-CLE
+  - Fp2-CLE
+  - F3-LER
+  - F4-LER
+  - C3-LER
+  - C4-LER
+  - O1-LER
+  - O2-LER
+  - F7-LER
+  - F8-LER
+  - T3-LER
+  - T4-LER
+  - T5-LER
+  - T6-LER
+  - P3-LER
+  - P4-LER
+  - Fz-LER
+  - Cz-LER
+  - Pz-LER
+  - Fp1-LER
+  - Fp2-LER
+  renamed_eog_channels:
+  - EOG(L)
+  - EOG(R)
+  id_regex: (.*) PSG
+  extractor:
+    _target_: extract_psg.standard_extract
+hypno:
+  file_glob: MASS/SS1_EDF/*Base.edf
+  extract_func:
+    _target_: utils.extract_hypno_utils.extract_from_edf
+  id_regex: (.*) Base
+  prepare_func: null
+  write_offsets_to_file: true
+preprocessing:
+  psg_regex: .*[.]h5
+  hyp_regex: .*[.]ids
+splitting:
+  family_id_extractor: null
+  subject_id_regex: null
+  test_fraction: 1.0
+  max_test_subjects: null
+  validation_fraction: 0
+  max_validation_subjects: null

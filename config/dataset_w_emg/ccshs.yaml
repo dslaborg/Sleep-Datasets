@@ -1,0 +1,19 @@
+# @package _global_
+
+defaults:
+  - _base_dataset@_here_
+  - _self_
+
+name: 'ccshs'
+
+psg:
+  file_glob: 'ccshs/polysomnography/edfs/*.edf'
+  eeg_channels: [ 'C3-A2', 'C4-A1' ]
+  eog_channels: [ 'LOC-A2', 'ROC-A1' ]
+  emg_channels: [ 'EMG2-EMG1', 'EMG3-EMG1' ]
+  renamed_emg_channels: [ 'EMGl', 'EMGr' ]
+  id_regex: ".*-.*-(.*)"
+
+hypno:
+  file_glob: 'ccshs/polysomnography/annotations-events-nsrr/*.xml'
+  id_regex: ".*-.*-(.*)-.*"

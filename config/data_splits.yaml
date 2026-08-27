@@ -1,0 +1,30 @@
+# config expected by `prepare_splits.py`; creates the train/valid/test datasplit and writes it to `save_file`.
+# all datasets are included via the per-dataset entries below; drop a line to exclude a dataset.
+defaults:
+  - base_config@_global_
+  - dataset/abc@datasets.abc
+  - dataset/ccshs@datasets.ccshs
+  - dataset/cfs@datasets.cfs
+  - dataset/chat@datasets.chat
+  - dataset/dcsm@datasets.dcsm
+  - dataset/dodh@datasets.dodh
+  - dataset/dodo@datasets.dodo
+  - dataset/hpap@datasets.hpap
+  - dataset/isruc-sg1@datasets.isruc-sg1
+  - dataset/isruc-sg2@datasets.isruc-sg2
+  - dataset/isruc-sg3@datasets.isruc-sg3
+  - dataset/mass-c1@datasets.mass-c1
+  - dataset/mass-c3@datasets.mass-c3
+  - dataset/mesa@datasets.mesa
+  - dataset/mros@datasets.mros
+  - dataset/phys@datasets.phys
+  - dataset/sedf-sc@datasets.sedf-sc
+  - dataset/sedf-st@datasets.sedf-st
+  - dataset/shhs@datasets.shhs
+  - dataset/sof@datasets.sof
+  - dataset/svuh@datasets.svuh
+  - _self_
+
+save_file: "${general.save_dir}/preprocessed/datasplit.yaml"  # where to save the datasplit
+cv_n_splits: 1  # set to >1 for cross validation splits
+seed: 0  # seed for random operations
